@@ -27,7 +27,7 @@ def send(content, config):
     return
 
 
-def main_handler():
+def main_handler(event, context):
     with open('./config.json', "r",
               encoding="utf-8") as f:
         config = json.loads(f.read())
@@ -54,7 +54,7 @@ def main_handler():
         msg.append({"name": "房号", "value": result.get("RoomNo")})
         msg.append({"name": "电量", "value": result.get("Balance")})
     else:
-        msg.append({"name": "查询结果", "value": "查询失败，可能是cookie失效"})
+        msg.append({"name": "查询结果", "value": "查询失败，可能是接口失效"})
     msg = "\n".join([f"{one.get('name')}: {one.get('value')}" for one in msg])
     print(msg)
     if config.get('push'):
@@ -64,5 +64,7 @@ def main_handler():
             print("企业微信应用消息推送失败", e)
     return
 
-
-main_handler()
+if __name__ == "__main__":
+    main_handler()
+    
+    
