@@ -27,7 +27,7 @@ def send(content, config):
     return
 
 
-def main_handler(event, context):
+def main_handler():
     with open('./config.json', "r",
               encoding="utf-8") as f:
         config = json.loads(f.read())
@@ -46,15 +46,16 @@ def main_handler(event, context):
     }
 
     ret = requests.get(url=url, headers=headers).json()
+    print(ret)
     msg = []
-    if ret.get("msg") == "成功":
+    if ret.get("res") == "success":
         result = ret.get("data", {})
         msg.append({"name": "园区", "value": result.get("ParkName")})
         msg.append({"name": "楼栋", "value": result.get("BuildingName")})
         msg.append({"name": "房号", "value": result.get("RoomNo")})
-        msg.append({"name": "电量", "value": result.get("Balance")})
+        msg.append({"name": "电费", "value": result.get("Balance")})
     else:
-        msg.append({"name": "查询结果", "value": "查询失败，可能是接口失效"})
+        msg.append({"name": "查询结果", "value": ret.get("msg")})
     msg = "\n".join([f"{one.get('name')}: {one.get('value')}" for one in msg])
     print(msg)
     if config.get('push'):
