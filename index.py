@@ -16,11 +16,9 @@ def send(content, config):
     data = {
         "touser": qywx_touser,
         "agentid": int(qywx_agentid),
-        "msgtype": "textcard",
-        "textcard": {
-            "title": "电费查询",
-            "description": content,
-            "url": "URL",
+        "msgtype": "text",
+        "text": {
+            "content": f"HNU电费查询\n{content}",
         },
     }
     requests.post(url=f"https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={token}", data=json.dumps(data))
