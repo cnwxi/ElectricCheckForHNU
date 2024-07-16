@@ -57,8 +57,7 @@ def check_one_place(config):
             log_file.write(log_content)
     else:
         msg.append({"name": "查询结果", "value": ret.get("msg")})
-    msg = "\n".join([f"{one.get('name')}: {one.get('value')}" for one in msg])
-    print(msg)
+    msg = "\n".join([f"{one.get('name')}: {one.get('value')}" for one in msg])    
     return msg,now_balance_log
 
 

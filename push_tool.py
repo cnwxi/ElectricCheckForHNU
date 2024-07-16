@@ -36,7 +36,6 @@ def serverchan_push(content, now_balance, config):
     serverchan_key = config.get('serverchan_key')
     text = f"HNU电费查询|{now_balance}"
     content = content.replace("\n", "\n\n")
-    print(text)
     res = requests.post(
         f"https://sc.ftqq.com/{serverchan_key}.send?title={text}&desp={content}")
     res = res.json()
