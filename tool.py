@@ -17,6 +17,7 @@ def check_one_place(config):
         msg.append({"name": "当前余额", "value": result.get('Balance')})
         current_time = datetime.datetime.now().strftime(format_str)
         last_log = None
+        now_balance_log = None
         final_write_mode = 'a'
         log_file_path = f"./log/{place}"
         if os.path.exists(log_file_path):
@@ -42,6 +43,8 @@ def check_one_place(config):
                         last_balance_log)
                     now_balance_log = result.get("Balance")
                     now_balance, _ = extract_value_and_unit(now_balance_log)
+                    assert now_balance is not None , 'http request error'
+                    assert last_balance is not None, 'log file error'
                     cost = now_balance - last_balance
                     msg.append({"name": "电费变动", "value": f"{cost:.2f}{unit}"})
                     if cost > 0:  # 充值 刷新log,避免文件占用过大
@@ -64,23 +67,21 @@ def check_one_place(config):
 def cal_time(current_time, last_time):
     nd = datetime.datetime.strptime(current_time, format_str)
     ld = datetime.datetime.strptime(last_time, format_str)
-    tmp = (nd - ld).total_seconds()
-    if tmp / 60 < 1:
+    tmp = (nd - ld).total_seconds() # 秒
+    unit = '秒'
+    if tmp / 60 < 1: # 不足一分钟
         tmp = tmp
         unit = '秒'
-    elif tmp / 60 / 60 < 1:
+    elif tmp / 60 / 60 < 1: # 不足一小时
         tmp = tmp / 60  # 分钟
         unit = '分钟'
-    elif tmp / 60 / 60 < 1:
+    elif tmp / 60 / 60 / 24 < 1: # 不足一天
         tmp = tmp / 60 / 60
         unit = '小时'
-    else:
+    else: # 超过一天
         tmp = tmp / 60 / 60 / 24
         unit = '天'
-    if tmp // 1 == 0:
-        tmp = int(tmp)
-    else:
-        tmp = round(tmp, 2)
+    tmp = round(tmp, 2)
     return f"{tmp}{unit}"
 
 
