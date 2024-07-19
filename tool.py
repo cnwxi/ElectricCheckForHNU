@@ -55,12 +55,12 @@ def check_one_place(config):
                         final_write_mode = "w"
                         add_sign = "+"  # 补充增加符号
                     cost_balance_log = f"{add_sign}{cost:.2f}{unit}"
-                    if unit == "度": # 单位为度，换算人民币
+                    if unit == "度":  # 单位为度，换算人民币
                         unit = "元"
                         cost = cost * 0.619  # 电费单价
                         cost_balance_log += f"{add_sign}{cost:.2f}{unit}"
                     msg.append({"name": "余额变动", "value": cost_balance_log})
-                    
+
                 except:
                     print("error")
         else:
