@@ -4,18 +4,23 @@
 如果有其他推送需求，请参考网络上的其他仓库自行补充，向本仓库贡献代码或者提出issue并等待更新<br>
 
 ## 如何使用
-1. 在长期运行的机器上克隆本仓库`git clone https://github.com/cnwxi/ElectricCheckForHNU.git`<br>
+1. 在长期运行的联网设备上克隆本仓库`git clone https://github.com/cnwxi/ElectricCheckForHNU.git`<br>
 2. 配置好你的python环境，安装必要的依赖库`pip install request`或者`pip install -r requirements.txt`，使用requirements.txt文件时请注意先cd到对应文件夹下<br>
-3. 参考说明文档 README.md 修改配置文件<br>
-4. 使用`python index.py`测试是否正确配置并推送信息<br>
+3. 参考说明文档 README.md 修改配置文件并重命名为`config.json`<br>
+4. 使用`python /your path/ElectricCheckForHNU/index.py`测试是否正确配置并推送信息<br>
+5. 配置定时任务使脚本定期运行查询电量。
 
+以Linux例配置定时任务：
+1. 进入终端
+2. 输入`crontab -e`
+3. 选择vi或者vim等编辑器，按下`a`在文件末尾添加`0 18 * * * cd /your path/ElectricCheckForHNU/ && python ./index.py`，按下`Esc`后输入`:wq`按下`Enter`保存文件，以定时每天18点查询电量。具体crontab前5位数值定义请搜索查阅相关信息。
 ---
 
 ## config文件解释
 ```
 {
   "config": [
-    {
+    { # 用户1
       "push": false, # 是否启用推送 true/false
       "push_config": { # 所用推送方式需要的必要参数
         "type": "qywx", # 使用的推送方式：企业微信/server酱
@@ -30,7 +35,7 @@
         "roomNo": "房间号"
       }
     },
-    {
+    { # 用户2
       "push": false,
       "push_config": {
         "type": "serverchan",
