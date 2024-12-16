@@ -32,7 +32,8 @@
       "dormitory_config": { # 宿舍信息
         "parkNo": "园区编号",
         "buildingNo": "楼栋号",
-        "roomNo": "房间号"
+        "roomNo": "房间号",
+        "username": "用户名1" # 若有同一宿舍用户，用于区分，避免文件读写错误
       }
     },
     { # 用户2
@@ -42,9 +43,10 @@
         "serverchan_key": "server酱密钥"
       },
       "dormitory_config": {
-      "parkNo": "园区编号",
-      "buildingNo": "楼栋号",
-      "roomNo": "房间号"
+        "parkNo": "园区编号",
+        "buildingNo": "楼栋号",
+        "roomNo": "房间号",
+        "username": "用户名2"
       }
     }
   ]

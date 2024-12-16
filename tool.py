@@ -23,7 +23,7 @@ def check_one_place(config):
         now_balance_log = None
         add_sign = ""
         final_write_mode = "a"
-        log_file_path = f"./log/{place}"
+        log_file_path = f"./log/{config.get('username')}{place}"
         if os.path.exists(log_file_path):
             with open(log_file_path, "rb") as log_file:
                 try:

@@ -12,7 +12,8 @@
       "dormitory_config": {
         "parkNo": "园区编号",
         "buildingNo": "楼栋号",
-        "roomNo": "房间号"
+        "roomNo": "房间号",
+        "username": "用户名1"
       }
     },
     {
@@ -24,7 +25,8 @@
       "dormitory_config": {
         "parkNo": "园区编号",
         "buildingNo": "楼栋号",
-        "roomNo": "房间号"
+        "roomNo": "房间号",
+        "username": "用户名2"
       }
     }
   ]
