@@ -35,16 +35,16 @@ def check_one_place(config):
                             log_file.seek(-2, 1)  # 将光标向前移动两个字节
                             if log_file.tell() == 0:
                                 break
-                    last_log = (
-                        log_file.readline().decode("utf-8").replace("\n", "")
-                    )  # 读取最后一行内容
+                    last_log = (log_file.readline().decode("utf-8").replace(
+                        "\n", ""))  # 读取最后一行内容
                     last_time = last_log.split(" ", 1)[0]
                     delta = cal_time(current_time, last_time)
                     msg.append({"name": "上次查询", "value": last_time})
                     msg.append({"name": "当前查询", "value": current_time})
                     msg.append({"name": "查询间隔", "value": delta})
                     last_balance_log = last_log.rsplit(" ", 1)[-1]
-                    last_balance, unit = extract_value_and_unit(last_balance_log)
+                    last_balance, unit = extract_value_and_unit(
+                        last_balance_log)
                     now_balance_log = result.get("Balance")
                     now_balance, _ = extract_value_and_unit(now_balance_log)
                     assert now_balance is not None, "http request error"
@@ -54,11 +54,12 @@ def check_one_place(config):
                         # print("覆盖写入记录文件")
                         final_write_mode = "w"
                         add_sign = "+"  # 补充增加符号
-                    cost_balance_log = f"{add_sign}{cost:.2f}{unit}"
+
                     if unit == "度":  # 单位为度，换算人民币
-                        unit = "元"
-                        cost = cost * 0.619  # 电费单价
-                        cost_balance_log += f"{add_sign}{cost:.2f}{unit}"
+                        # cost = cost * 0.619  # 电费单价
+                        cost_balance_log = f"{add_sign}{cost:.2f}{unit}，{add_sign}{cost*0.619:.2f}元"
+                    elif unit == "元":
+                        cost_balance_log = f"{add_sign}{cost:.2f}{unit}，{add_sign}{cost/0.619:.2f}度"
                     msg.append({"name": "余额变动", "value": cost_balance_log})
 
                 except:
@@ -116,7 +117,8 @@ def http_request(config):
         "Host": "wxpay.hnu.edu.cn",
         # "Proxy-Connection": "keep-alive",
         "Accept": "*/*",
-        "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x6305002e)",
+        "User-Agent":
+        "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x6305002e)",
         "X-Requested-With": "XMLHttpRequest",
         # "Cookie": config.get('cookies'),
         "refere": "http://wxpay.hnu.edu.cn/electricCharge/home/",
