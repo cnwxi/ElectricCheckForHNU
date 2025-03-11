@@ -95,8 +95,8 @@ def cal_time(current_time, last_time):
     else:  # 超过一天
         tmp = tmp / 60 / 60 / 24
         unit = "天"
-    tmp = round(tmp, 2)
-    return f"{tmp}{unit}"
+    # tmp = round(tmp, 2)
+    return f"{tmp:.2f}{unit}"
 
 
 def extract_value_and_unit(s):
