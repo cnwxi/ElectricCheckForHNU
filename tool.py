@@ -4,7 +4,7 @@ import datetime
 import json
 import os
 
-format_str = "%Y/%m/%d|%H:%M:%S"
+format_str = "%Y/%m/%d-%H:%M:%S"
 
 
 def check_one_place(config):
