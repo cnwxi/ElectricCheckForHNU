@@ -57,17 +57,17 @@ def processList(someList):
 
 
 def getMarkDown(allInfoList):
-    markdown_table = "| 园区 | parkNo | 楼栋 | buildingNo |\n"
-    markdown_table += "|------|------|------|------|\n"
+    markdownTable = "| 园区 | parkNo | 楼栋 | buildingNo |\n"
+    markdownTable += "|------|------|------|------|\n"
     for i, parkInfo in enumerate(allInfoList):
         name = parkInfo[0]
         no = parkInfo[1]
         buildingNoList = parkInfo[2]
         for j, buildingInfo in enumerate(buildingNoList):
             if j == 0:
-                markdown_table += f"| {name} | {no} | {buildingInfo[0]} | {buildingInfo[1]} |\n"
+                markdownTable += f"| {name} | {no} | {buildingInfo[0]} | {buildingInfo[1]} |\n"
             else:
-                markdown_table += f"|      |      | {buildingInfo[0]} | {buildingInfo[1]} |\n"
+                markdownTable += f"|      |      | {buildingInfo[0]} | {buildingInfo[1]} |\n"
     # 获取当前日期时间
     now = datetime.datetime.now()
     # 时区设置
