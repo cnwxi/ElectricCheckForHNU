@@ -85,7 +85,6 @@ def getMarkDown(allInfoList):
 
 
 def repalce(newMarkdownTable):
-
     with open("README.md", "r", encoding="utf-8") as f:
         readme = f.read()
     # 找到目标段落之前的所有内容
@@ -108,9 +107,13 @@ def repalce(newMarkdownTable):
 if __name__ == "__main__":
     # 获取所有的parkNo
     parkList = getParkNo()
+    if len(parkList) == 0:
+        print("没有获取到任何数据")
+        exit(1)
     # 处理parkList
     parkNoList = processList(parkList)
     # 获取所有的buildingNo
+
     finalAllInfoList = []
     for i in parkNoList:
         name = i[0]
@@ -122,6 +125,7 @@ if __name__ == "__main__":
         finalAllInfoList.append([name, no, buildingNoList])
     # 打印最终的结果
     print(f"所有信息：{finalAllInfoList}")
+
     # 获取markdown格式的表格
     markdown_table = getMarkDown(finalAllInfoList)
     # 替换README.md中的内容
