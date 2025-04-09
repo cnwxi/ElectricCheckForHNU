@@ -70,12 +70,13 @@ def getMarkDown(allInfoList):
                 markdownTable += f"|      |      | {buildingInfo[0]} | {buildingInfo[1]} |\n"
     # 获取当前日期时间
     now = datetime.datetime.now()
+    rawTime = now.strftime("%Y-%m-%d %H:%M:%S")
     # 时区设置
     tz = datetime.timezone(datetime.timedelta(hours=8))  # UTC+8
     now = now.astimezone(tz)
     # 格式化为字符串
     formattedDate = now.strftime("%Y-%m-%d %H:%M:%S")
-    updateTime = f"\n最后更新时间：{formattedDate}\n"
+    updateTime = f"\n最后更新时间：{rawTime} 北京时间：{formattedDate}\n"
     markdownTable += f"{updateTime}"
     print(f"markdown_table：\n{markdownTable}")
     with open("allInfo.md", "w", encoding="utf-8") as f:
