@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 import json
-from tool import check_one_place
-from push_tool import send
+from utils.tool import check_one_place
+from utils.push_tool import send
 
 
 def main_handler():

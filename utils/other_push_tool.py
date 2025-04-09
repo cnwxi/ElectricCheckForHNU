@@ -24,5 +24,6 @@ def get_userid_by_mobile():
     print(data)
 
 
-# 获取userid
-get_userid_by_mobile()
+if __name__ == "__main__":
+    # 企业微信获取userid
+    get_userid_by_mobile()

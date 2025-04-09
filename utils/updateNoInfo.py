@@ -79,8 +79,8 @@ def getMarkDown(allInfoList):
     updateTime = f"\n最后更新时间：{rawTime} 北京时间：{formattedDate}\n"
     markdownTable += f"{updateTime}"
     print(f"markdown_table：\n{markdownTable}")
-    with open("allInfo.md", "w", encoding="utf-8") as f:
-        f.write(markdownTable)
+    # with open("./utils/allInfo.md", "w", encoding="utf-8") as f:
+    #     f.write(markdownTable)
     return markdownTable
 
 
@@ -100,7 +100,7 @@ def repalce(newMarkdownTable):
         # 如果没有找到目标段落，则直接在文件末尾添加新的内容
         new_readme = readme + "\n" + tips + newMarkdownTable
     # 写入新的README.md文件
-    with open("README.md", "w", encoding="utf-8") as f:
+    with open("./README.md", "w", encoding="utf-8") as f:
         f.write(new_readme)
 
 
