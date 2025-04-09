@@ -1,4 +1,5 @@
 import requests
+import datetime
 
 headers = {
     "Host": "wxpay.hnu.edu.cn",
@@ -67,18 +68,23 @@ def getMarkDown(allInfoList):
                 markdown_table += f"| {name} | {no} | {buildingInfo[0]} | {buildingInfo[1]} |\n"
             else:
                 markdown_table += f"|      |      | {buildingInfo[0]} | {buildingInfo[1]} |\n"
-        # if i != len(allInfoList) - 1:
-        #     markdown_table += "|------|------|------|------|\n"
+    # 获取当前日期时间
+    now = datetime.datetime.now()
+    # 时区设置
+    tz = datetime.timezone(datetime.timedelta(hours=8))  # UTC+8
+    now = now.astimezone(tz)
+    # 格式化为字符串
+    formattedDate = now.strftime("%Y-%m-%d %H:%M:%S")
+    updateTime = f"\n最后更新时间：{formattedDate}\n"
+    markdown_table += f"{updateTime}"
     print(f"markdown_table：\n{markdown_table}")
+    with open("allInfo.md", "w", encoding="utf-8") as f:
+        f.write(markdown_table)
     return markdown_table
 
 
-def storeInfo(allInfoList):
-    with open("allInfo.md", "w", encoding="utf-8") as f:
-        f.write(markdown_table)
-
-
 def repalce(newInfo):
+
     with open("README.md", "r", encoding="utf-8") as f:
         readme = f.read()
     # 找到目标段落之前的所有内容
@@ -117,9 +123,6 @@ if __name__ == "__main__":
     print(f"所有信息：{finalAllInfoList}")
     # 获取markdown格式的表格
     markdown_table = getMarkDown(finalAllInfoList)
-    # 写入文件
-    storeInfo(finalAllInfoList)
     # 替换README.md中的内容
     repalce(finalAllInfoList)
-
-    # 获取提示信息
+    # Github Action提交到git
