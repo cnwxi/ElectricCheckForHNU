@@ -76,14 +76,14 @@ def getMarkDown(allInfoList):
     # 格式化为字符串
     formattedDate = now.strftime("%Y-%m-%d %H:%M:%S")
     updateTime = f"\n最后更新时间：{formattedDate}\n"
-    markdown_table += f"{updateTime}"
-    print(f"markdown_table：\n{markdown_table}")
+    markdownTable += f"{updateTime}"
+    print(f"markdown_table：\n{markdownTable}")
     with open("allInfo.md", "w", encoding="utf-8") as f:
-        f.write(markdown_table)
-    return markdown_table
+        f.write(markdownTable)
+    return markdownTable
 
 
-def repalce(newInfo):
+def repalce(newMarkdownTable):
 
     with open("README.md", "r", encoding="utf-8") as f:
         readme = f.read()
@@ -94,11 +94,11 @@ def repalce(newInfo):
     if target_index != -1:
         print(f"找到目标段落")
         # 将目标段落之前的内容和新的内容拼接起来
-        new_readme = readme[:target_index] + target_paragraph + tips + markdown_table
+        new_readme = readme[:target_index] + target_paragraph + tips + newMarkdownTable
         print(f"更新README.md内容")
     else:
         # 如果没有找到目标段落，则直接在文件末尾添加新的内容
-        new_readme = readme + "\n" + tips + markdown_table
+        new_readme = readme + "\n" + tips + newMarkdownTable
     # 写入新的README.md文件
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(new_readme)
@@ -124,5 +124,5 @@ if __name__ == "__main__":
     # 获取markdown格式的表格
     markdown_table = getMarkDown(finalAllInfoList)
     # 替换README.md中的内容
-    repalce(finalAllInfoList)
+    repalce(markdown_table)
     # Github Action提交到git
