@@ -1,6 +1,8 @@
 import requests
 import json
-
+import smtplib
+from email.mime.text import MIMEText
+from email.header import Header
 
 def qxwx_push(content, balance_log, config):
     print("企业微信应用消息推送开始")
@@ -45,12 +47,34 @@ def serverchan_push(content, balance_log, config):
     else:
         print("Server酱推送失败")
 
+def qqmail_push(content, balance_log, config):
+    print("QQ邮箱推送开始")
+    qqmail_user = config.get("qqmail_user")
+    qqmail_password = config.get("qqmail_password")
+    qqmail_to = qqmail_user  # 默认发送到自己
+    
+    msg = MIMEText(f"{content}", 'plain', 'utf-8')
+    msg['Subject'] = Header(f'HNU电费查询: {balance_log}', 'utf-8')
+    msg['From'] = qqmail_user
+    msg['To'] = qqmail_to
+
+    try:
+        server = smtplib.SMTP_SSL('smtp.qq.com', 465)
+        server.login(qqmail_user, qqmail_password)
+        server.sendmail(qqmail_user, qqmail_to, msg.as_string())
+        print("QQ邮箱推送成功")
+    except Exception as e:
+        print(f"QQ邮箱推送失败: {e}")
+    finally:
+        server.quit()
 
 def send(content, balance_log, config):
     if config.get("type") == "qywx":
         qxwx_push(content, balance_log, config)
     elif config.get("type") == "serverchan":
         serverchan_push(content, balance_log, config)
+    elif config.get("type") == "qqmail":
+        qqmail_push(content, balance_log, config)
     else:
         print("未知推送方式")
     return

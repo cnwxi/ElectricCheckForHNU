@@ -2,6 +2,7 @@
   "config": [
     {
       "push": false,
+      "balance_limit": 10,
       "push_config": {
         "type": "qywx",
         "qywx_corpid": "企业微信推送参数——企业编号",
@@ -18,9 +19,25 @@
     },
     {
       "push": false,
+      "balance_limit": 10,
       "push_config": {
         "type": "serverchan",
         "serverchan_key": "server酱密钥"
+      },
+      "dormitory_config": {
+        "parkNo": "园区编号",
+        "buildingNo": "楼栋号",
+        "roomNo": "房间号",
+        "username": "用户名2"
+      }
+    },
+    {
+      "push": false,
+      "balance_limit": 10,
+      "push_config": {
+        "type": "qqmail",
+        "qqmail_user": "qq@qq.com",
+        "qqmail_password": "smtp密码"
       },
       "dormitory_config": {
         "parkNo": "园区编号",

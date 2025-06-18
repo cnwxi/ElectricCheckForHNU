@@ -20,9 +20,11 @@ def check_one_place(config):
         msg.append({"name": "当前余额", "value": result.get("Balance")})
         current_time = datetime.datetime.now().strftime(format_str)
         last_log = None
-        now_balance_log = None
+        now_balance_log = result.get("Balance")
+        cost_balance_log = '0.00元，0.00度'
         add_sign = ""
         final_write_mode = "a"
+        unit = '元'  # 默认单位为元
         log_file_path = f"./log/{config.get('username')}{place}"
         if os.path.exists(log_file_path):
             with open(log_file_path, "rb") as log_file:
@@ -45,29 +47,22 @@ def check_one_place(config):
                     last_balance_log = last_log.rsplit(" ", 1)[-1]
                     last_balance, unit = extract_value_and_unit(
                         last_balance_log)
-                    now_balance_log = result.get("Balance")
                     now_balance, _ = extract_value_and_unit(now_balance_log)
                     assert now_balance is not None, "http request error"
                     assert last_balance is not None, "log file error"
                     cost = now_balance - last_balance
                     if cost > 0:  # 充值 刷新log,避免文件占用过大
-                        # print("覆盖写入记录文件")
+                        print(f"覆盖写入记录文件: {log_file_path}")
                         final_write_mode = "w"
                         add_sign = "+"  # 补充增加符号
-
-                    if unit == "度":  # 单位为度，换算人民币
-                        # cost = cost * 0.619  # 电费单价
-                        cost_balance_log = f"{add_sign}{cost:.2f}{unit}，{add_sign}{cost*0.619:.2f}元"
-                    elif unit == "元":
-                        cost_balance_log = f"{add_sign}{cost:.2f}{unit}，{add_sign}{cost/0.619:.2f}度"
+                    cost_balance_log = f"{add_sign}{cost:.2f}{unit}"
                     msg.append({"name": "余额变动", "value": cost_balance_log})
-
-                except:
-                    print("error")
+                except Exception as e:
+                    print("error:", e)
         else:
             msg.append({"name": "首次查询", "value": current_time})
             os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
-        with open(log_file_path, final_write_mode) as log_file:
+        with open(log_file_path, final_write_mode,encoding='utf-8') as log_file:
             log_content = f"{current_time} {result.get('ParkName')}{result.get('BuildingName')}{result.get('RoomNo')} {result.get('Balance')}\n"
             log_file.write(log_content)
     else:

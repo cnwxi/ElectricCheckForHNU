@@ -76,7 +76,7 @@ def getMarkDown(allInfoList):
     now = now.astimezone(tz)
     # 格式化为字符串
     formattedDate = now.strftime("%Y-%m-%d %H:%M:%S")
-    updateTime = f"\n最后更新时间：{rawTime} 北京时间：{formattedDate}\n"
+    updateTime = f"\n最后更新时间（北京时间）：{formattedDate}\n"
     markdownTable += f"{updateTime}"
     print(f"markdown_table：\n{markdownTable}")
     # with open("./utils/allInfo.md", "w", encoding="utf-8") as f:
