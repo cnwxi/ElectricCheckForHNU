@@ -13,6 +13,8 @@
     - 收信客户端：微信
   - 企业微信（如果已有则推荐，没有则不推荐，已限制个人注册）。
     - 收信客户端：微信
+  - Showdoc（推荐）：从[showdoc](https://push.showdoc.com.cn/#/push)扫码绑定微信获得专属推送地址，可在公众号中获取信息，没有每日推送数量限制。
+    - 收信客户端：微信
 
 如果有其他推送需求，请参考网络上的其他仓库自行补充，向本仓库贡献代码或者提出issue并等待更新<br>
 
@@ -23,11 +25,15 @@
 4. 使用`python /your path/ElectricCheckForHNU/index.py`测试是否正确配置并推送信息<br>
 5. 配置定时任务使脚本定期运行查询电量。
 
-以Linux例配置定时任务：
+### 以Linux例配置定时任务：
 1. 进入终端
 2. 输入`crontab -e`
 3. 选择vi或者vim等编辑器，按下`a`在文件末尾添加`0 18 * * * cd /your path/ElectricCheckForHNU/ && python ./index.py`，按下`Esc`后输入`:wq`按下`Enter`保存文件，以定时每天18点查询电量。具体crontab前5位数值定义请搜索查阅相关信息。
----
+
+### 青龙面板配置
+1. 在【脚本管理】新建文件夹，以 `ElectricCheckForHNU` 为例，并上传所有项目文件；
+2. 按照 `config.template.json` 示例文件，结合下方config文件解释，在脚本根目录（`ElectricCheckForHNU`）下添加 `config.json` 文件并保存；
+3. 在【定时任务】创建任务，名称随意，命令/脚本填写 `task 该脚本文件夹名称/index.py`（如 `task ElectricCheckForHNU/index.py`），定时规则按照crontab规则写，其余默认。
 
 ## config文件解释
 ```
@@ -37,7 +43,7 @@
       "push": false, # 是否启用推送 true/false，如果不想每天收到推送可关闭
       "balance_limit": 10, # 无论是否启用推送，当余额小于10元均会推送
       "push_config": { # 所用推送方式需要的必要参数
-        "type": "qywx", # 使用的推送方式：企业微信/server酱/qq邮箱
+        "type": "qywx", # 使用的推送方式：企业微信/server酱/qq邮箱/showdoc
         "qywx_corpid": "企业微信推送参数——企业编号",
         "qywx_agentid": "企业应用编号",
         "qywx_corpsecret": "企业应用密钥",
@@ -71,6 +77,20 @@
         "type": "qqmail",
         "qqmail_user": "qq@qq.com", # 你的qq邮箱
         "qqmail_password": "smtp密钥" # qq邮箱启用smtp服务时生成的密钥
+      },
+      "dormitory_config": {
+        "parkNo": "园区编号",
+        "buildingNo": "楼栋号",
+        "roomNo": "房间号",
+        "username": "用户名3"
+      }
+    },
+    { # 用户4
+      "push": false,
+      "balance_limit": 10,
+      "push_config": {
+        "type": "showdoc",
+        "showdoc_url": "完整的showdoc推送链接" # 在showdoc官网微信扫码绑定/登录后获得的专属推送链接
       },
       "dormitory_config": {
         "parkNo": "园区编号",
