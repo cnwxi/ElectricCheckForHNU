@@ -45,6 +45,19 @@
         "roomNo": "房间号",
         "username": "用户名3"
       }
-    }
+    },
+    {
+      "push": false,
+      "balance_limit": 10,
+      "push_config": {
+        "type": "showdoc",
+        "showdoc_url": "完整的showdoc推送链接"
+      },
+      "dormitory_config": {
+        "parkNo": "园区编号",
+        "buildingNo": "楼栋号",
+        "roomNo": "房间号",
+        "username": "用户名4"
+      }
   ]
 }

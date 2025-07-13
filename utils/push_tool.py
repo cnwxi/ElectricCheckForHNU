@@ -39,13 +39,27 @@ def serverchan_push(content, balance_log, config):
     text = f"HNU电费查询: {balance_log}"
     content = content.replace("\n", "\n\n")
     res = requests.post(
-        f"https://sc.ftqq.com/{serverchan_key}.send?title={text}&desp={content}"
+        f"https://sctapi.ftqq.com/{serverchan_key}.send?title={text}&desp={content}"
     )
     res = res.json()
     if res.get("code") == 0 and res.get("data").get("errno") == 0:
         print("Server酱推送成功")
     else:
         print("Server酱推送失败")
+
+def showdoc_push(content, balance_log, config):
+    print("Showdoc推送开始")
+    showdoc_url = config.get("showdoc_url")
+    text = f"HNU电费查询: {balance_log}"
+    content = content.replace("\n", "\n\n")
+    res = requests.post(
+        f"{showdoc_url}?title={text}&content={content}"
+    )
+    res = res.json()
+    if res.get("error_code") == 0:
+        print("Showdoc推送成功")
+    else:
+        print("Showdoc推送失败")
 
 def qqmail_push(content, balance_log, config):
     print("QQ邮箱推送开始")
@@ -73,6 +87,8 @@ def send(content, balance_log, config):
         qxwx_push(content, balance_log, config)
     elif config.get("type") == "serverchan":
         serverchan_push(content, balance_log, config)
+    elif config.get("type") == "showdoc":
+        showdoc_push(content, balance_log, config)
     elif config.get("type") == "qqmail":
         qqmail_push(content, balance_log, config)
     else:
